@@ -4,7 +4,6 @@ package com.example.randomuserapp.data.remote.response
 data class UserProfileResponseDTO(
     val info: InfoDTO,
     val results: List<ResultDTO>,
-    val errors: ErrorsDTO?
 )
 
 data class InfoDTO(

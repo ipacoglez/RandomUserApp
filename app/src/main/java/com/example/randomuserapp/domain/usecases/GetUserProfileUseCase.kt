@@ -16,7 +16,7 @@ class GetUserProfileUseCase @Inject constructor(private val api: UserProfileRepo
         if (response.results.isNotEmpty()) {
             emit(Resource.Success(response.results[0].toUserProfileDomain()))
         } else {
-            emit(Resource.Error(response.errors?.error!!))
+            emit(Resource.Error("Empty List"))
         }
     }.catch {
         emit(Resource.Error("Unexpected error :("))

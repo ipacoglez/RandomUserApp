@@ -3,11 +3,14 @@ package com.example.randomuserapp.presentation
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.core.view.isGone
+import androidx.core.view.isVisible
 import com.example.randomuserapp.R
 import com.example.randomuserapp.common.Constants
 import com.example.randomuserapp.common.loadImage
 import com.example.randomuserapp.common.parseDate
 import com.example.randomuserapp.databinding.ActivityMainBinding
+import com.example.randomuserapp.domain.model.UserProfile
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -30,40 +33,56 @@ class MainActivity : AppCompatActivity() {
         binding.updateButton.setOnClickListener {
             userProfileViewModel.getUserProfile()
         }
-
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        _binding = null
     }
 
     private fun observeUserProfile() {
         userProfileViewModel.userProfile.observe(this) { state ->
-            if (state.error.isNotEmpty()) {
-                Snackbar.make(
-                    binding.root,
-                    state.error,
-                    Snackbar.LENGTH_SHORT
-                ).show()
-            }
-            if (state.data != null) {
-                binding.apply {
-                    with(state.data) {
-                        nameText.text = name
-                        usernameText.text = username
-                        addressText.text = address
-                        ageText.text = age
-                        birthdayText.text = dob.parseDate()
-                        phoneText.text = phoneNumber
 
-                        pictureImage.loadImage(picture)
+            setVisibleLoading(state.isLoading)
+            setError(state.error)
 
-                        setGender(gender)
-                    }
-                }
+            state.data?.let { setSuccess(it) }
+        }
+    }
+
+    private fun setSuccess(data: UserProfile) {
+        binding.apply {
+            with(data) {
+                setHideLoading()
+                containerAddress.isVisible = true
+                containerInfo.isVisible = true
+                containerOtherInfo.isVisible = true
+                nameText.text = name
+                usernameText.text = username
+                addressText.text = address
+                ageText.text = age
+                birthdayText.text = dob.parseDate()
+                phoneText.text = phoneNumber
+
+                pictureImage.loadImage(picture)
+
+                setGender(gender)
             }
         }
+    }
+
+    private fun setError(errorMessage: String) {
+        if (errorMessage.isNotEmpty()) {
+            setHideLoading()
+            Snackbar.make(
+                binding.root,
+                errorMessage,
+                Snackbar.LENGTH_SHORT
+            ).show()
+        }
+    }
+
+    private fun setVisibleLoading(isLoading: Boolean) {
+        if (isLoading) binding.progressLoading.isVisible = true
+    }
+
+    private fun setHideLoading() {
+        binding.progressLoading.isGone = true
     }
 
     private fun setGender(gender: String) {
