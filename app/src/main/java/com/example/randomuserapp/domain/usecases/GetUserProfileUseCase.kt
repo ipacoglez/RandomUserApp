@@ -19,6 +19,6 @@ class GetUserProfileUseCase @Inject constructor(private val api: UserProfileRepo
             emit(Resource.Error("Empty List"))
         }
     }.catch {
-        emit(Resource.Error("Unexpected error :("))
+        emit(Resource.Error("Unexpected error :(. Try Again."))
     }
 }
