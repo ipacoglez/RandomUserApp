@@ -6,6 +6,7 @@ import androidx.activity.viewModels
 import com.example.randomuserapp.R
 import com.example.randomuserapp.common.Constants
 import com.example.randomuserapp.common.loadImage
+import com.example.randomuserapp.common.parseDate
 import com.example.randomuserapp.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
@@ -52,6 +53,9 @@ class MainActivity : AppCompatActivity() {
                         nameText.text = name
                         usernameText.text = username
                         addressText.text = address
+                        ageText.text = age
+                        birthdayText.text = dob.parseDate()
+                        phoneText.text = phoneNumber
 
                         pictureImage.loadImage(picture)
 

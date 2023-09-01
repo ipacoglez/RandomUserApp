@@ -3,4 +3,7 @@
     <string name="button_refresh">Refresh</string>
     <string name="header_title">My Profile</string>
     <string name="address_title">Address</string>
+    <string name="age_title">Age</string>
+    <string name="birthday_title">Birthday</string>
+    <string name="phone_title">Phone</string>
 </resources>

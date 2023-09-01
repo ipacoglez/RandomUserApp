@@ -6,6 +6,7 @@ data class UserProfile(
     val username: String,
     val gender:String,
     val dob: String,
+    val age: String,
     val address: String,
     val phoneNumber: String,
     val picture: String
