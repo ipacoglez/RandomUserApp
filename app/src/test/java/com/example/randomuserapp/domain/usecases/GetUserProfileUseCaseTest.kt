@@ -20,7 +20,7 @@ class GetUserProfileUseCaseTest {
     }
 
     @Test
-    fun `given valid data profile`() {
+    fun `when api return valid data then return data profile`() {
         runBlocking {
             val response = DummyUser.userProfileResponseDTO.results[0].toUserProfileDomain()
 
@@ -31,5 +31,15 @@ class GetUserProfileUseCaseTest {
         }
     }
 
+    @Test
+    fun `when api return empty list then return message error`() {
+        runBlocking {
+            userProfileRepositoryImplTest.fakeError = true
+            val getUserProfileUseCase = getUserProfileUseCase.invoke().last()
+            print(getUserProfileUseCase.data)
+            assert(getUserProfileUseCase.data == null)
+            assert(getUserProfileUseCase.message.equals("Empty List"))
+        }
+    }
 
 }

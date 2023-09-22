@@ -16,7 +16,7 @@ import com.example.randomuserapp.data.remote.response.UserProfileResponseDTO
 import com.example.randomuserapp.domain.repository.UserProfileRepository
 
 class UserProfileRepositoryImplTest():UserProfileRepository{
-    private var fakeError = false
+    var fakeError = false
     override suspend fun getRandomUser(): UserProfileResponseDTO =
          if(fakeError){
              val list= listOf<ResultDTO>()
